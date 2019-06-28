@@ -1,0 +1,30 @@
+#!/bin/sh /etc/rc.common
+# This script mustn't be existing, but the mesh_auto_open_plinks=0 does not work properly. 
+# Instead of set 0 and opened link by plink_action open - it happens randomly, a station may be opened or may be not.
+# Thus I am going through another way and using a maclist taken from the file /etc/config/wireless, combining it to a different file 
+# and then the blocker script looks for a mac that is presented in an associated list but not presented in the list of allowed mac.
+# Then it block this one.
+
+
+START=99
+STOP=99
+
+BLOCKER="/etc/mesh-blocker/blocker.sh"
+PID="/var/run/mesh-blocker"
+
+start() {
+	if [ ! -f "$PID" ]; then
+		$BLOCKER &
+	fi
+}                 
+ 
+stop() {          
+	kill -9 $(cat $PID) 2>/dev/null
+	rm -f $PID
+}
+
+restart()
+{
+	stop
+	start
+}
