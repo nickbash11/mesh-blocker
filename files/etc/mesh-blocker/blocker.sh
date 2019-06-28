@@ -22,7 +22,7 @@ do
 
 	if [ ! -s "$LIST" ]
 	then
-		logger -t mesh-blocker "$LIST does not exit or empty. Sleep 30s."
+		logger -t mesh-blocker "$LIST does not exist or empty. Sleep 30s."
 		sleep 25
 		continue
 	fi
