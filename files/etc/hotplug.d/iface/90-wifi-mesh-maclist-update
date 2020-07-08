@@ -1,0 +1,22 @@
+#!/bin/sh
+
+[[ "$ACTION" != ifup ]] && exit 0;
+
+. /lib/functions.sh
+config_load "wireless"
+
+config_get MODE $DEVICE mode
+[[ "$MODE" != mesh ]] && exit 0;
+
+config_get POLICY $DEVICE macfilter
+case $POLICY in
+	deny)	IW_POLICY="block";;
+	allow)	IW_POLICY="open";;
+	*)	rm -f /tmp/mesh_maclist_allowed; exit 0;;
+esac
+
+config_get MACLIST $DEVICE maclist
+cat /dev/null > /tmp/mesh_maclist_allowed
+for MAC in $MACLIST; do
+	echo "$MAC" >> /tmp/mesh_maclist_allowed
+done
