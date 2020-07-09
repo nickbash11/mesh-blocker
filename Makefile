@@ -10,7 +10,7 @@ include $(INCLUDE_DIR)/package.mk
 
 define Package/mesh-blocker
   SECTION:=net
-  CATEGORY:=qMp
+  CATEGORY:=Network
   TITLE:=Scripts for blocking unknown mesh nodes
 endef
 
