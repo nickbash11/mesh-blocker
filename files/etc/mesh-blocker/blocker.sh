@@ -1,7 +1,7 @@
 #!/bin/sh
 
 PID=/var/run/mesh-blocker
-LIST=/tmp/mesh_maclist_allowed
+LIST=/var/run/mesh-blocker.maclist
 DEVICE=wlan0
 amount_nodes=
 amount_mac=
@@ -44,6 +44,7 @@ do
 				then                                                    
 					iw dev $DEVICE station set $MAC plink_action block
 					logger -t mesh-blocker "A station with the mac $MAC has been BLOCKED"
+#					iw dev $DEVICE station get $MAC | logger -t mesh-blocker
 				fi
 			elif [[ $(iw dev wlan0 station get $MAC | grep "mesh plink:" | awk '{print $3}') == BLOCKED ]]
 			then                                                   
