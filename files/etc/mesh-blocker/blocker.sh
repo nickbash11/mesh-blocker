@@ -46,7 +46,7 @@ do
 					logger -t mesh-blocker "A station with the mac $MAC has been BLOCKED"
 #					iw dev $DEVICE station get $MAC | logger -t mesh-blocker
 				fi
-			elif [[ $(iw dev wlan0 station get $MAC | grep "mesh plink:" | awk '{print $3}') == BLOCKED ]]
+			elif [[ $(iw dev $DEVICE station get $MAC | grep "mesh plink:" | awk '{print $3}') == BLOCKED ]]
 			then                                                   
 				iw dev $DEVICE station set $MAC plink_action open
 				logger -t mesh-blocker "A station with the mac $MAC has been OPENED"
